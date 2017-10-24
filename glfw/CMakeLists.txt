@@ -1,0 +1,18 @@
+fips_begin_lib(flextgl)
+    fips_vs_warning_level(3)
+    fips_src(flextgl)
+fips_end_lib()
+
+fips_begin_app(nvim-ui cmdline)
+    fips_vs_disable_warnings(4312)
+    fips_files(nvim-ui.cpp FontTex.hpp)
+    fips_files(stb_truetype.h stb_rect_pack.h stb_image_write.h)
+    fips_deps(glfw3 flextgl)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DPROJECT_ROOT=\\\"${FIPS_PROJECT_DIR}\\\"")
+fips_end_app()
+
+if (FIPS_CLANG)
+    set_target_properties(imgui PROPERTIES COMPILE_FLAGS "-Wno-unused-but-set-variable -Wno-type-limits -Wno-missing-field-initializers")
+elseif(FIPS_GCC)
+    set_target_properties(imgui PROPERTIES COMPILE_FLAGS "-Wno-unused-but-set-variable -Wno-type-limits -Wno-missing-field-initializers")
+endif()
